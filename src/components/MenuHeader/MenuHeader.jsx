@@ -44,3 +44,64 @@ const MenuHeader = () => {
 };
 
 export default MenuHeader;
+
+
+
+
+
+
+// import React, { useEffect } from 'react';
+// import './MenuHeader.css';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getAllCategory } from '../../redux/actions/categoryAction';
+
+// const MenuHeader = () => {
+//     const category = useSelector(state => state.category);
+//     const dispatch = useDispatch();
+
+//     useEffect(() => {
+//         dispatch(getAllCategory());
+//     }, []);
+
+//     const showParentCategories = (categories) => {
+//         return categories.map(categoryItem => (
+        
+//             <li key={categoryItem._id}>
+//                 {categoryItem.parentId == null && categoryItem.categoryImage && (
+//                     <div>
+//                         <img src={categoryItem.categoryImage} alt={categoryItem.name} />
+//                     </div>
+//                 )}
+//                 <span>{categoryItem.name}</span>
+//                 {categoryItem.children.length > 0 && (
+//                     <ul>{showParentCategories(categoryItem.children)}</ul>
+//                 )}
+//             </li>
+//         ));
+//     }
+
+//     const renderCategories = () => {
+//         if (category.categories.length > 0) {
+//             const parentCategories = category.categories.filter(cat => !cat.parentId);
+//             return showParentCategories(parentCategories);
+//         }
+//         return null;
+//     }
+
+//     return (
+//         <div className='menuHeader'>
+//             <ul>
+//                 {renderCategories()}
+//             </ul>
+//         </div>
+//     );
+// };
+
+// export default MenuHeader;
+
+
+
+
+
+
+

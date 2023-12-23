@@ -16,6 +16,7 @@ const buildNewCategories = (parentId, categories, category) => {
                 _id: category._id,
                 name: category.name,
                 slug: category.slug,
+                categoryImage: category.categoryImage,
                 type: category.type,
                 children: []
             }
@@ -33,6 +34,7 @@ const buildNewCategories = (parentId, categories, category) => {
                     _id: category._id,
                     name: category.name,
                     slug: category.slug,
+                    categoryImage: category.categoryImage,
                     parentId: category.parentId,
                     children: category.children
                 }], category) : []
@@ -62,7 +64,7 @@ const categoryReducer = (state = initState, action) => {
             };
         case categoryConstansts.ADD_NEW_CATEGORY_SUCCESS:
             const category = action.payload.category;
-            console.log("Received Category in Reducer:", action.payload.category); 
+            console.log("Received Category in Reducer:", action.payload.category);
             const updatedCategories = buildNewCategories(category.parentId, state.categories, category);
             console.log(updatedCategories);
             return {
