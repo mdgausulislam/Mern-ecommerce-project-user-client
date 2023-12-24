@@ -1,18 +1,20 @@
-import './App.css'
-import Header from './components/Header/Header'
-import HomePage from './container/HomePage/HomePage'
+import './App.css';
+import HomePage from './container/HomePage/HomePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MenuHeader from './components/MenuHeader/MenuHeader';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ProductList from './container/ProductList/ProductList';
 
 function App() {
   return (
     <div>
-      <Header />
-      <MenuHeader />
-      <HomePage />
-
+      <Router>
+        <Routes>
+          <Route path='/' exact element={<HomePage />} />
+          <Route path='/:slug' element={<ProductList />} />
+        </Routes>
+      </Router>
     </div>
   )
 }
 
-export default App
+export default App;
