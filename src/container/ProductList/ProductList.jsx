@@ -35,17 +35,16 @@ import ProductPage from '../ProductPage/ProductPage';
 const ProductList = (props) => {
     const { slug } = useParams();
     const renderProduct = () => {
-        const params = getParams(window.location.search); // Use window.location.search for query parameters
+        console.log(slug);
+        const params = getParams(window.location.search);
         let content = null;
         switch (params.type) {
-            case 'store':
-                content = <ProductStore />
+            case "store":
+                content = <ProductStore {...props} />;
                 break;
-            case 'page':
-                content = <ProductPage />
+            case "page":
+                content = <ProductPage {...props} />;
                 break;
-            default:
-                content = null
         }
         return content;
     };
@@ -53,7 +52,6 @@ const ProductList = (props) => {
     return (
         <div>
             <Main>
-
                 {renderProduct()}
             </Main>
         </div>

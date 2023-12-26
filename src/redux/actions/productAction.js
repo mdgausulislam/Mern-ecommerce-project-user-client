@@ -23,9 +23,11 @@ export const getProductPage = (payload) => {
         try {
             const { cid, type } = payload.params;
             const res = await axiosInstance.get(`/page/${cid}/${type}`);
+            console.log(res);
             dispatch({ type: productConstants.GET_PRODUCT_PAGE_REQUEST });
             if (res.status === 200) {
                 const { page } = res.data;
+                console.log(res.data.page);
                 dispatch({
                     type: productConstants.GET_PRODUCT_PAGE_SUCCESS,
                     payload: { page }
@@ -37,7 +39,7 @@ export const getProductPage = (payload) => {
                     payload: { error }
                 });
             }
-        } catch(error) {
+        } catch (error) {
             console.log(error)
         }
 
