@@ -17,3 +17,20 @@ export const getProductsBySlug = (slug) => {
         }
     }
 }
+export const getProductPage = (payload) => {
+    return async dispatch => {
+        const { cid, type } = payload;
+        const res = await axiosInstance.get(`/page/${cid}/${type}`);
+        console.log("data ki pabo ami:", res);
+        // if (res.status === 200) {
+        //     // dispatch({
+        //     //     type: productConstants.GET_PRODUCTS_BY_SLUG,
+        //     //     payload: res.data
+        //     // })
+        // } else {
+        //     // dispatch({
+        //     //     type:productConstants.G
+        //     // })
+        // }
+    }
+}
