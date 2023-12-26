@@ -36,8 +36,6 @@ const ProductList = (props) => {
     const { slug } = useParams();
     const renderProduct = () => {
         const params = getParams(window.location.search); // Use window.location.search for query parameters
-        console.log('slug:', slug);
-        console.log('params ki asce:', params);
         let content = null;
         switch (params.type) {
             case 'store':
