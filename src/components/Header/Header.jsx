@@ -43,7 +43,7 @@ const Header = (props) => {
                 label="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                rightElement={<a href="#">Forgot?</a>}
+                // rightElement={<a href="#">Forgot?</a>}
               />
               <MaterialButton
                 title="Login"
