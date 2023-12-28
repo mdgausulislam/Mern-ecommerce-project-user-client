@@ -92,7 +92,8 @@
   z-index: 50;
 }
 
-.more {
+.more,
+.fullName {
   font-weight: bold;
   color: #fff;
   display: flex;
