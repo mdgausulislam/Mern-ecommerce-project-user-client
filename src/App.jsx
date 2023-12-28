@@ -5,6 +5,7 @@ import ProductList from './container/ProductList/ProductList';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { isUserLoggedIn } from './redux/actions/authActions';
+import ProductDetailsPage from './container/ProductDetailsPage/ProductDetailsPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -15,17 +16,19 @@ function App() {
       dispatch(isUserLoggedIn());
     }
   }, [auth.authenticate]);
-  
+
   return (
     <div>
       <Router>
         <Routes>
-          <Route path='/' exact element={<HomePage />} />
-          <Route path='/:slug' element={<ProductList />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/:productSlug/:productId/p" element={<ProductDetailsPage />} />
+          <Route path="/:slug" element={<ProductList />} />
         </Routes>
       </Router>
     </div>
-  )
+  );
 }
 
 export default App;
+
