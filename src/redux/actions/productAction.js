@@ -53,18 +53,20 @@ export const getProductDetailsById = (payload) => {
         let res;
         try {
             const { productId } = payload.params;
-            res = await axiosInstance.get(`/product/${productId}`);
-            console.log(res);
+            console.log("amar ki achi beche", productId);
+
+            res = await axiosInstance.get(`/product/id/${productId}`);
+            console.log('Response:', res.data); // Log the response for debugging
             dispatch({
                 type: productConstants.GET_PRODUCT_DETAILS_BY_ID_SUCCESS,
                 payload: { productDetails: res.data.product }
             });
 
         } catch (error) {
-            console.log(error);
+            console.error('Error:', error); // Log the specific error for debugging
             dispatch({
                 type: productConstants.GET_PRODUCT_DETAILS_BY_ID_FAILURE,
-                payload: { error: res.data.error }
+                payload: { error: error.message }
             });
         }
 

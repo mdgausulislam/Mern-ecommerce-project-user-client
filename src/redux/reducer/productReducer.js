@@ -11,8 +11,9 @@ const initState = {
     },
     pageRequest: false,
     page: {},
-    error: null
-
+    error: null,
+    productDetails: {},
+    loading: false,
 };
 
 const productReducer = (state = initState, action) => {
@@ -41,6 +42,24 @@ const productReducer = (state = initState, action) => {
                 ...state,
                 pageRequest: false,
                 error: action.payload.error
+            };
+        case productConstants.GET_PRODUCT_DETAILS_BY_ID_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+
+        case productConstants.GET_PRODUCT_DETAILS_BY_ID_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                productDetails: action.payload.productDetails,
+            };
+        case productConstants.GET_PRODUCT_DETAILS_BY_ID_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error,
             };
         default:
             return state;
