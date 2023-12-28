@@ -10,12 +10,19 @@ import {
   MaterialButton,
   DropdownMenu
 } from '../MaterialUI/MaterialUI';
+import { useDispatch } from 'react-redux';
+import login from '../../redux/actions/authActions';
 
 const Header = (props) => {
 
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+
+  const userLogin = () => {
+    dispatch(login({ email, password }))
+  }
 
 
   return (
@@ -43,7 +50,7 @@ const Header = (props) => {
                 label="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                // rightElement={<a href="#">Forgot?</a>}
+              // rightElement={<a href="#">Forgot?</a>}
               />
               <MaterialButton
                 title="Login"
@@ -52,6 +59,7 @@ const Header = (props) => {
                 style={{
                   margin: "40px 0 20px 0",
                 }}
+                onClick={userLogin}
               />
               <p>OR</p>
 

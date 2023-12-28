@@ -15,7 +15,7 @@ export const productConstants = {
     GET_PRODUCT_PAGE_FAILURE: "GET_PRODUCT_PAGE_FAILURE",
 };
 
-export const authConstants = {
+export const authConstant = {
     LOGIN_REQUEST: "LOGIN_REQUEST",
     LOGIN_FAILURE: "LOGIN_FAILURE",
     LOGIN_SUCCESS: "LOGIN_SUCCESS",
