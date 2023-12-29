@@ -6,6 +6,7 @@ import { getProductsBySlug } from "../../redux/actions/productAction";
 import { Link, useParams } from "react-router-dom";
 import './ProductStore.css'
 import { generatedPublicUrl } from "../../../urlConfig";
+import Card from '../../components/UI/Card/Card';
 
 const ProductStore = () => {
     const dispatch = useDispatch();
@@ -22,7 +23,6 @@ const ProductStore = () => {
     const onlySlugId = slug.split('-')[0];
     useEffect(() => {
 
-        console.log("slugid:", onlySlugId);
         dispatch(getProductsBySlug(onlySlugId));
     }, [dispatch])
 
@@ -31,21 +31,26 @@ const ProductStore = () => {
             {
                 Object.keys(product.productByPrice).map((key, index) => {
                     return (
-                        <div className="card" key={key}>
-                            <div className="cardHeader" key={key}>
-                                <div>{onlySlugId} mobile under {priceRange[key]}</div>
-                                <button>View All</button>
-                            </div>
-                            <div className="d-flex">
+                        <Card
+                            key={key}
+                            headerLeft={`${onlySlugId} mobile under ${priceRange[key]}`}
+                            headerRight={<button>View All</button>}
+                            style={{
+                                width: "calc(100% - 40px)",
+                                margin: "20px",
+                            }}
+                        >
+                            <div style={{ display: 'flex' }}>
                                 {
                                     product.productByPrice[key].map(product =>
                                         <Link
                                             to={`/${product.slug}/${product._id}/p`}
                                             style={
-                                                { display: 'block',
-                                                textDecoration: "none",
-                                                color: "#000",
-                                             }
+                                                {
+                                                    display: 'block',
+                                                    textDecoration: "none",
+                                                    color: "#000",
+                                                }
                                             } className="productContainer"
                                             key={product._id}>
                                             <div className="productImageContainer">
@@ -62,7 +67,7 @@ const ProductStore = () => {
                                         </Link>)
                                 }
                             </div>
-                        </div>
+                        </Card>
                     )
                 })
             }

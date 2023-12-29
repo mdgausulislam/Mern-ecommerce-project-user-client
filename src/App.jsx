@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { isUserLoggedIn } from './redux/actions/authActions';
 import ProductDetailsPage from './container/ProductDetailsPage/ProductDetailsPage';
+import CartPage from './container/CartPage/CartPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,8 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route exact path="/" element={<HomePage />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/:productSlug/:productId/p" element={<ProductDetailsPage />} />
           <Route path="/:slug" element={<ProductList />} />
         </Routes>
