@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { isUserLoggedIn } from './redux/actions/authActions';
 import ProductDetailsPage from './container/ProductDetailsPage/ProductDetailsPage';
 import CartPage from './container/CartPage/CartPage';
+import { updateCart } from './redux/actions/cartAction';
 
 function App() {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ function App() {
       dispatch(isUserLoggedIn());
     }
   }, [auth.authenticate]);
+
+  useEffect(() => {
+    dispatch(updateCart())
+  }, [])
 
   return (
     <div>
