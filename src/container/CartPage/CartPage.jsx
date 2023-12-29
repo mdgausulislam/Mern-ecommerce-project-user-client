@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Main from '../../Layout/Main';
 import Card from '../../components/UI/Card/Card';
 import './CartPage.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import CartItems from './CartItems/CartItems';
 
 const CartPage = () => {
     const cart = useSelector((state) => state.cart);
-    const cartItems = cart.cartItems;
+    const [cartItems, setCartItems] = useState(cart.cartItems);
+    const dispatch = useDispatch();
+    // const cartItems = cart.cartItems;
+    useEffect(() => {
+        setCartItems(cart.cartItems);
+    }, [cart.cartItems]);
+
+    const onQuantityIncrement = (_id, qty) => {
+        const { name, price, img } = cartItems[_id];
+        dispatch(addToCart({ _id, name, price, img }, 1));
+    };
+
+    const onQuantityDecrement = (_id, qty) => {
+        const { name, price, img } = cartItems[_id];
+        dispatch(addToCart({ _id, name, price, img }, -1));
+    };
+
+    // const onRemoveCartItem = (_id) => {
+    //     dispatch(removeCartItem({ productId: _id }));
+    // };
+
+
     return (
 
         <Main>
@@ -17,18 +39,11 @@ const CartPage = () => {
                     style={{ width: "calc(100% - 400px)", overflow: "hidden" }}>
                     {
                         Object.keys(cartItems).map((key, index) =>
-                            <div key={index} className='flexRow'>
-                                <div className='cartProductContainers'>
-                                    <img src="" alt="" />
-                                </div>
-                                <div>
-                                    <h6>{cartItems[key].name}-qty-{cartItems[key].qty}</h6>
-                                </div>
-                                <div>
-                                    <h6>Delivery 3-5 days</h6>
-                                </div>
-
-                            </div>
+                            <CartItems
+                                key={index}
+                                cartItem={cartItems[key]}
+                                onQuantityInc={onQuantityIncrement}
+                                onQuantityDec={onQuantityDecrement} />
                         )
                     }
 
