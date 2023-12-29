@@ -10,7 +10,6 @@ const ProductDetailsPage = (props) => {
     const { productId } = useParams();
 
     useEffect(() => {
-        console.log("peyeci productid:", productId);
         const payload = {
             params: {
                 productId
@@ -21,7 +20,6 @@ const ProductDetailsPage = (props) => {
     return (
         <div>
             <Main>
-                <h6>{JSON.stringify(product)}</h6>
                 <h6>{product.productDetails.name}</h6>
             </Main>
         </div>

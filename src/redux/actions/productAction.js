@@ -4,7 +4,6 @@ import { productConstants } from "./constant";
 export const getProductsBySlug = (slug) => {
     return async dispatch => {
         const res = await axiosInstance.get(`/product/${slug}`);
-
         if (res.status === 200) {
             dispatch({
                 type: productConstants.GET_PRODUCTS_BY_SLUG,
@@ -53,22 +52,17 @@ export const getProductDetailsById = (payload) => {
         let res;
         try {
             const { productId } = payload.params;
-            console.log("amar ki achi beche", productId);
-
             res = await axiosInstance.get(`/product/id/${productId}`);
-            console.log('Response:', res.data); // Log the response for debugging
             dispatch({
                 type: productConstants.GET_PRODUCT_DETAILS_BY_ID_SUCCESS,
                 payload: { productDetails: res.data.product }
             });
 
         } catch (error) {
-            console.error('Error:', error); // Log the specific error for debugging
             dispatch({
                 type: productConstants.GET_PRODUCT_DETAILS_BY_ID_FAILURE,
                 payload: { error: error.message }
             });
         }
-
     }
 }

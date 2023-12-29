@@ -2,7 +2,7 @@ import axiosInstance from "../../Axios/AxiosSecure";
 import { authConstant } from "./constant";
 
 
-const login = (user) => {
+export const login = (user) => {
     console.log(user);
 
     return async (dispatch) => {
@@ -37,8 +37,23 @@ const login = (user) => {
         // })
     }
 }
-export default login;
 
+export const signout = () => {
+    return async (dispatch) => {
+        dispatch({ type: authConstant.LOGOUT_REQUEST });
+        localStorage.clear();
+        dispatch({ type: authConstant.LOGOUT_SUCCESS });
+        //const res = await axios.post(`/admin/signout`);
+        // if(res.status === 200){
+
+        // }else{
+        //     dispatch({
+        //         type: authConstants.LOGOUT_FAILURE,
+        //         payload: { error: res.data.error }
+        //     });
+        // }
+    };
+};
 
 
 export const isUserLoggedIn = () => {
@@ -59,28 +74,5 @@ export const isUserLoggedIn = () => {
                 payload: { error: "Failed to login" }
             })
         }
-    }
-}
-
-
-export const signOut = () => {
-    return async dispatch => {
-        dispatch({ type: authConstant.LOGOUT_REQUEST })
-        const res = await axiosInstance.post(`/signout`)
-
-        if (res.status === 200) {
-            localStorage.clear();
-            dispatch({
-                type: authConstant.LOGOUT_SUCCESS
-            })
-        } else {
-            if (res.status === 400) {
-                dispatch({
-                    type: authConstant.LOGOUT_FAILURE,
-                    payload: { error: res.data.error }
-                })
-            }
-        }
-
     }
 }
