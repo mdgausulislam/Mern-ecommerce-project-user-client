@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Main from '../../Layout/Main';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetailsById } from '../../redux/actions/productAction';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ProductDetailsPage.css'
 import { MaterialButton } from '../../components/MaterialUI/MaterialUI';
 import { IoIosArrowForward, IoIosStar, IoMdCart } from 'react-icons/io';
@@ -12,6 +12,7 @@ import { generatedPublicUrl } from '../../../urlConfig';
 import { addToCart } from '../../redux/actions/cartAction';
 
 const ProductDetailsPage = (props) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product);
     const { productId } = useParams();
@@ -62,7 +63,7 @@ const ProductDetailsPage = (props) => {
                                         const { _id, name, price } = product.productDetails;
                                         const img = product.productDetails.productPictures[0].img;
                                         dispatch(addToCart({ _id, name, price, img }));
-                                        props.history.push(`/cart`);
+                                        navigate(`/cart`);
                                     }}
                                 />
                                 <MaterialButton

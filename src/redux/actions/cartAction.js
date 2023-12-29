@@ -29,13 +29,13 @@ export const addToCart = (product) => {
         console.log('action::cartItems', cartItems);
         //const product = action.payload.product;
         //const cartItems = state.cartItems;
-        // const qty = cartItems[product._id] ? parseInt(cartItems[product._id].qty + 1) : 1;
-        // cartItems[product._id] = { ...product, qty, };
+        const qty = cartItems[product._id] ? parseInt(cartItems[product._id].qty + 1) : 1;
+        cartItems[product._id] = { ...product, qty, };
         // localStorage.setItem("cart", JSON.stringify(cartItems));
-        // console.log("addToCart::", cartItems);
+        console.log("addToCart::", cartItems);
         dispatch({
             type: cartConstants.ADD_TO_CART,
-            payload: { cartItems: product },
+            payload: { cartItems }
         });
     };
 };
