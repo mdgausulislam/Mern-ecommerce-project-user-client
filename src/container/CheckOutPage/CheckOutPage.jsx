@@ -28,6 +28,8 @@ const CheckOutPage = () => {
     const user = useSelector((state) => state.user);
     const auth = useSelector((state) => state.auth);
     const [newAddress, setNewAddress] = useState(false);
+    const [confirmAddress, setConfirmAddress] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState(null);
     const [address, setAddress] = useState([]);
     const dispatch = useDispatch();
 
@@ -36,13 +38,18 @@ const CheckOutPage = () => {
     };
 
     const selectAddress = (addr) => {
-        console.log(addr);
-        // const updatedAddress = address.map((adr) =>
-        //     adr._id === addr._id
-        //         ? { ...adr, selected: true }
-        //         : { ...adr, selected: false }
-        // );
-        // setAddress(updatedAddress);
+        // console.log(addr);
+        const updatedAddress = address.map((adr) =>
+            adr._id === addr._id
+                ? { ...adr, selected: true }
+                : { ...adr, selected: false }
+        );
+        setAddress(updatedAddress);
+    };
+
+    const confirmDeliveryAddress = (addr) => {
+        setSelectedAddress(addr);
+        setConfirmAddress(true);
     };
 
     useEffect(() => {
@@ -84,41 +91,43 @@ const CheckOutPage = () => {
                     <CheckoutStep
                         stepNumber={"2"}
                         title={"DELIVERY ADDRESS"}
-                        active={address.length > 0 ? true : false}
+                        active={!confirmAddress}
                         body={
                             <>
                                 {
-                                    address.map(adr =>
-                                        <div className="flexRow addressContainer">
-                                            <div>
-                                                <input name="address" onClick={() => selectAddress(adr)} type="radio" />
-                                            </div>
-                                            <div className="flexRow sb addressinfo">
+                                    confirmAddress ? JSON.stringify(selectedAddress)
+                                        : address.map(adr =>
+                                            <div className="flexRow addressContainer">
                                                 <div>
+                                                    <input name="address" onClick={() => selectAddress(adr)} type="radio" />
+                                                </div>
+                                                <div className="flexRow sb addressinfo">
                                                     <div>
-                                                        <span>{adr.name}</span>
-                                                        <span >{adr.addressType}</span>
-                                                        <span >{adr.mobileNumber}</span>
-                                                    </div>
-                                                    <div>
-                                                        {adr.address}
-                                                    </div>
-                                                    {
-                                                        adr.selected && <MaterialButton
-                                                            title="DELIVERY HERE"
-                                                            style={{
-                                                                width: "250px",
-                                                            }}
-                                                        />
-                                                    }
+                                                        <div>
+                                                            <span>{adr.name}</span>
+                                                            <span >{adr.addressType}</span>
+                                                            <span >{adr.mobileNumber}</span>
+                                                        </div>
+                                                        <div>
+                                                            {adr.address}
+                                                        </div>
+                                                        {
+                                                            adr.selected && <MaterialButton
+                                                                title="DELIVERY HERE"
+                                                                onClick={() => confirmDeliveryAddress(adr)}
+                                                                style={{
+                                                                    width: "250px",
+                                                                }}
+                                                            />
+                                                        }
 
-                                                </div>
-                                                <div>
-                                                    {adr.selected && <h6>edit</h6>}
+                                                    </div>
+                                                    <div>
+                                                        {adr.selected && <h6>edit</h6>}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    )
+                                        )
                                 }
                             </>
                         }
@@ -126,15 +135,16 @@ const CheckOutPage = () => {
                     {/* addressform */}
 
                     {
-                        newAddress ? <AddressForm
-                            onSubmitForm={onAddressSubmit}
-                            onCancel={() => { }}
-                        /> : <CheckoutStep
-                            stepNumber={"+"}
-                            title={"ADD NEW ADDRESS"}
-                            active={false}
-                            onClick={() => setNewAddress(true)}
-                        />
+                        confirmAddress ? null :
+                            newAddress ? <AddressForm
+                                onSubmitForm={onAddressSubmit}
+                                onCancel={() => { }}
+                            /> : <CheckoutStep
+                                stepNumber={"+"}
+                                title={"ADD NEW ADDRESS"}
+                                active={false}
+                                onClick={() => setNewAddress(true)}
+                            />
                     }
 
                     <CheckoutStep
