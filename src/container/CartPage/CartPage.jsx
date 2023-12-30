@@ -7,6 +7,7 @@ import CartItems from './CartItems/CartItems';
 import { addToCart, getCartItems } from '../../redux/actions/cartAction';
 import { MaterialButton } from '../../components/MaterialUI/MaterialUI';
 import { useNavigate } from 'react-router-dom';
+import PriceDetails from '../../components/PriceDetails/PriceDetails';
 
 const CartPage = (props) => {
     const cart = useSelector((state) => state.cart);
@@ -78,12 +79,15 @@ const CartPage = (props) => {
                         </div>
                     </div>
                 </Card>
-                <Card
-                    headerLeft='Price'
-                    style={{
-                        width: '500px'
-                    }}>
-                </Card>
+                <PriceDetails
+                    totalItem={Object.keys(cart.cartItems).reduce(function (qty, key) {
+                        return qty + cart.cartItems[key].qty;
+                    }, 0)}
+                    totalPrice={Object.keys(cart.cartItems).reduce((totalPrice, key) => {
+                        const { price, qty } = cart.cartItems[key];
+                        return totalPrice + price * qty;
+                    }, 0)}
+                />
             </div>
         </Main>
     );
