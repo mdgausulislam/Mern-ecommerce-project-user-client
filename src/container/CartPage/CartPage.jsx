@@ -4,6 +4,7 @@ import Card from '../../components/UI/Card/Card';
 import './CartPage.css'
 import { useDispatch, useSelector } from 'react-redux';
 import CartItems from './CartItems/CartItems';
+import { addToCart } from '../../redux/actions/cartAction';
 
 const CartPage = () => {
     const cart = useSelector((state) => state.cart);
@@ -32,7 +33,7 @@ const CartPage = () => {
     return (
 
         <Main>
-            <div className="cartContainer">
+            <div className="cartContainer" style={{ alignItems: "flex-start" }}>
                 <Card
                     headerLeft={`My Cart`}
                     headerRight={<div>Deliver to</div>}
@@ -48,10 +49,11 @@ const CartPage = () => {
                     }
 
                 </Card>
-                <Card style={{
-                    width: '500px'
-                }}>
-                    price
+                <Card
+                    headerLeft='Price'
+                    style={{
+                        width: '500px'
+                    }}>
                 </Card>
             </div>
         </Main>
