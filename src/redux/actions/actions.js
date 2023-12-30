@@ -3,5 +3,6 @@ export * from './productAction';
 export * from './authActions';
 export * from './cartAction';
 export * from './addressAction';
+export * from './orderAction';
 
 
