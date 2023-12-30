@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./CheckOutPage.css";
 import { getAddress } from "../../redux/actions/addressAction";
 import Main from "../../Layout/Main";
-import { MaterialButton } from "../../components/MaterialUI/MaterialUI";
+import { MaterialButton, MaterialInput } from "../../components/MaterialUI/MaterialUI";
 import AddressForm from "./AddressForm";
 import Card from "../../components/UI/Card/Card";
 
@@ -11,7 +11,7 @@ import Card from "../../components/UI/Card/Card";
 const CheckoutStep = (props) => {
     return (
         <div className="checkoutStep">
-            <div
+            <div onClick={props.onClick}
                 className={`checkoutHeader ${props.active && "active"}`}
             >
                 <div>
@@ -27,15 +27,37 @@ const CheckoutStep = (props) => {
 const CheckOutPage = () => {
     const user = useSelector((state) => state.user);
     const auth = useSelector((state) => state.auth);
+    const [newAddress, setNewAddress] = useState(false);
+    const [address, setAddress] = useState([]);
     const dispatch = useDispatch();
 
     const onAddressSubmit = () => {
 
     };
 
+    const selectAddress = (addr) => {
+        console.log(addr);
+        // const updatedAddress = address.map((adr) =>
+        //     adr._id === addr._id
+        //         ? { ...adr, selected: true }
+        //         : { ...adr, selected: false }
+        // );
+        // setAddress(updatedAddress);
+    };
+
     useEffect(() => {
-        dispatch(getAddress())
-    }, []);
+        auth.authenticate && dispatch(getAddress())
+    }, [auth.authenticate]);
+
+    useEffect(() => {
+        const address = user.address.map((adr) => ({
+            ...adr,
+            selected: false,
+            edit: false,
+        }));
+        setAddress(address);
+        //user.address.length === 0 && setNewAddress(true);
+    }, [user.address]);
 
 
     return (
@@ -47,24 +69,29 @@ const CheckOutPage = () => {
                         title={"LOGIN"}
                         active={!auth.authenticate}
                         body={
-                            <div className="loggedInId">
-                                <span style={{ fontWeight: 500 }}>{auth.user.firstName}</span>
-                                <span style={{ margin: "0 5px" }}>{auth.user.email}</span>
-                            </div>
-
+                            auth.authenticate ? (
+                                <div className="loggedInId">
+                                    <span style={{ fontWeight: 500 }}>{auth.user.fullName}</span>
+                                    <span style={{ margin: "0 5px" }}>{auth.user.email}</span>
+                                </div>
+                            ) : (
+                                <div>
+                                    <MaterialInput label="Email" />
+                                </div>
+                            )
                         }
                     />
                     <CheckoutStep
                         stepNumber={"2"}
                         title={"DELIVERY ADDRESS"}
-                        active={true}
+                        active={address.length > 0 ? true : false}
                         body={
                             <>
                                 {
-                                    user.address.map(adr =>
+                                    address.map(adr =>
                                         <div className="flexRow addressContainer">
                                             <div>
-                                                <input name="address" type="radio" />
+                                                <input name="address" onClick={() => selectAddress(adr)} type="radio" />
                                             </div>
                                             <div className="flexRow sb addressinfo">
                                                 <div>
@@ -76,14 +103,19 @@ const CheckOutPage = () => {
                                                     <div>
                                                         {adr.address}
                                                     </div>
-                                                    <MaterialButton
-                                                        title="DELIVERY HERE"
-                                                        style={{
-                                                            width: "250px",
-                                                        }}
-                                                    />
+                                                    {
+                                                        adr.selected && <MaterialButton
+                                                            title="DELIVERY HERE"
+                                                            style={{
+                                                                width: "250px",
+                                                            }}
+                                                        />
+                                                    }
+
                                                 </div>
-                                                <div><h6>edit</h6></div>
+                                                <div>
+                                                    {adr.selected && <h6>edit</h6>}
+                                                </div>
                                             </div>
                                         </div>
                                     )
@@ -92,10 +124,19 @@ const CheckOutPage = () => {
                         }
                     />
                     {/* addressform */}
-                    <AddressForm
-                        onSubmitForm={onAddressSubmit}
-                        onCancel={() => { }}
-                    />
+
+                    {
+                        newAddress ? <AddressForm
+                            onSubmitForm={onAddressSubmit}
+                            onCancel={() => { }}
+                        /> : <CheckoutStep
+                            stepNumber={"+"}
+                            title={"ADD NEW ADDRESS"}
+                            active={false}
+                            onClick={() => setNewAddress(true)}
+                        />
+                    }
+
                     <CheckoutStep
                         stepNumber={'3'}
                         title={'ORDER SUMMARY'} />
