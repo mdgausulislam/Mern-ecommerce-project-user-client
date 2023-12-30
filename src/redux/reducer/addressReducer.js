@@ -25,6 +25,23 @@ export default (state = initState, action) => {
                 loading: false,
                 error: action.payload.error,
             };
+        case userConstants.ADD_USER_ADDRESS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case userConstants.ADD_USER_ADDRESS_SUCCESS:
+            return {
+                ...state,
+                address: action.payload.address,
+                loading: false,
+            };
+        case userConstants.ADD_USER_ADDRESS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error,
+            };
     }
 
     return state;

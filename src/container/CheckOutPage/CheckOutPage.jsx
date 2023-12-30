@@ -6,6 +6,8 @@ import Main from "../../Layout/Main";
 import { Anchor, MaterialButton, MaterialInput } from "../../components/MaterialUI/MaterialUI";
 import AddressForm from "./AddressForm";
 import PriceDetails from "../../components/PriceDetails/PriceDetails";
+import { getCartItems } from "../../redux/actions/cartAction";
+import CartPage from "../CartPage/CartPage";
 
 
 const CheckoutStep = (props) => {
@@ -93,10 +95,14 @@ const CheckOutPage = () => {
     const [confirmAddress, setConfirmAddress] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [address, setAddress] = useState([]);
+    const [orderSummary, setOrderSummary] = useState(false);
+    const [orderConfirmation, setOrderConfirmation] = useState(false);
     const dispatch = useDispatch();
 
     const onAddressSubmit = () => {
-
+        setSelectedAddress(addr);
+        setConfirmAddress(true);
+        setOrderSummary(true);
     };
 
     const selectAddress = (addr) => {
@@ -112,6 +118,7 @@ const CheckOutPage = () => {
     const confirmDeliveryAddress = (addr) => {
         setSelectedAddress(addr);
         setConfirmAddress(true);
+        setOrderSummary(true);
     };
 
 
@@ -123,7 +130,8 @@ const CheckOutPage = () => {
     };
 
     useEffect(() => {
-        auth.authenticate && dispatch(getAddress())
+        auth.authenticate && dispatch(getAddress());
+        auth.authenticate && dispatch(getCartItems());
     }, [auth.authenticate]);
 
     useEffect(() => {
@@ -231,22 +239,36 @@ const CheckOutPage = () => {
 
                     {/* addressform */}
 
-                    {
-                        confirmAddress ? null :
-                            newAddress ? <AddressForm
-                                onSubmitForm={onAddressSubmit}
-                                onCancel={() => { }}
-                            /> : <CheckoutStep
-                                stepNumber={"+"}
-                                title={"ADD NEW ADDRESS"}
-                                active={false}
-                                onClick={() => setNewAddress(true)}
-                            />
-                    }
+
+                    {/* AddressForm */}
+                    {confirmAddress ? null : newAddress ? (
+                        <AddressForm onSubmitForm={onAddressSubmit} onCancel={() => { }} />
+                    ) : auth.authenticate ? (
+                        <CheckoutStep
+                            stepNumber={"+"}
+                            title={"ADD NEW ADDRESS"}
+                            active={false}
+                            onClick={() => setNewAddress(true)}
+                        />
+                    ) : null}
 
                     <CheckoutStep
                         stepNumber={'3'}
-                        title={'ORDER SUMMARY'} />
+                        title={'ORDER SUMMARY'}
+                        active={orderSummary}
+                        body={
+                            orderSummary ? (
+                                <CartPage onlyCartItems={true} />
+                            ) : orderConfirmation ? (
+                                <div className="stepCompleted">
+                                    {Object.keys(cart.cartItems).length} items
+                                </div>
+                            ) : null
+                        }
+                    />
+
+
+
                     <CheckoutStep
                         stepNumber={'4'}
                         title={'PAYMENT OPTIONS'} />
