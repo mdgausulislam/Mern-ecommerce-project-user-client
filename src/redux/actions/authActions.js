@@ -1,5 +1,5 @@
 import axiosInstance from "../../Axios/AxiosSecure";
-import { authConstant } from "./constant";
+import { authConstant, cartConstants } from "./constant";
 
 
 export const login = (user) => {
@@ -40,21 +40,23 @@ export const login = (user) => {
 
 export const signout = () => {
     return async (dispatch) => {
-        dispatch({ type: authConstant.LOGOUT_REQUEST });
-        localStorage.clear();
-        dispatch({ type: authConstant.LOGOUT_SUCCESS });
-        //const res = await axios.post(`/admin/signout`);
-        // if(res.status === 200){
-
-        // }else{
-        //     dispatch({
-        //         type: authConstants.LOGOUT_FAILURE,
-        //         payload: { error: res.data.error }
-        //     });
-        // }
+      dispatch({ type: authConstant.LOGOUT_REQUEST });
+    //   localStorage.removeItem('user');
+    //   localStorage.removeItem('token');
+      localStorage.clear();
+      dispatch({ type: authConstant.LOGOUT_SUCCESS });
+      dispatch({ type: cartConstants.RESET_CART });
+      //const res = await axios.post(`/admin/signout`);
+      // if(res.status === 200){
+  
+      // }else{
+      //     dispatch({
+      //         type: authConstants.LOGOUT_FAILURE,
+      //         payload: { error: res.data.error }
+      //     });
+      // }
     };
-};
-
+  };
 
 export const isUserLoggedIn = () => {
     return async dispatch => {

@@ -8,6 +8,8 @@ import { isUserLoggedIn } from './redux/actions/authActions';
 import ProductDetailsPage from './container/ProductDetailsPage/ProductDetailsPage';
 import CartPage from './container/CartPage/CartPage';
 import { updateCart } from './redux/actions/cartAction';
+import CheckOutPage from './container/CheckOutPage/CheckOutPage';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ function App() {
 
   useEffect(() => {
     dispatch(updateCart())
-  }, [])
+  }, [auth.authenticate])
 
   return (
     <div>
@@ -29,6 +31,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckOutPage />} />
           <Route path="/:productSlug/:productId/p" element={<ProductDetailsPage />} />
           <Route path="/:slug" element={<ProductList />} />
         </Routes>

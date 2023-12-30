@@ -12,6 +12,7 @@ import {
 } from '../MaterialUI/MaterialUI';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, signout } from '../../redux/actions/authActions';
+import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
   const [signup, setSignup] = useState(false);
@@ -125,39 +126,42 @@ const Header = (props) => {
               <p>Get access to your Orders, Wishlist and Recommendations</p>
             </div>
             <div className="rightspace">
-              <MaterialInput
-                type="text"
-                label="Enter Email/Enter Mobile Number"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
 
-              <MaterialInput
-                type="password"
-                label="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              // rightElement={<a href="#">Forgot?</a>}
-              />
-              <MaterialButton
-                title="Login"
-                bgColor="#fb641b"
-                textColor="#ffffff"
-                style={{
-                  margin: "40px 0 20px 0",
-                }}
-                onClick={userLogin}
-              />
-              <p>OR</p>
+              <div className="loginInputContainer">
+                <MaterialInput
+                  type="text"
+                  label="Enter Email/Enter Mobile Number"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
 
-              <MaterialButton
-                title="Request OTP"
-                bgColor="#ffffff"
-                textColor="#2874f0"
-                style={{
-                  margin: "20px 0 20px 0",
-                }}
-              />
+                <MaterialInput
+                  type="password"
+                  label="Enter Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                // rightElement={<a href="#">Forgot?</a>}
+                />
+                <MaterialButton
+                  title="Login"
+                  bgColor="#fb641b"
+                  textColor="#ffffff"
+                  style={{
+                    margin: "40px 0 20px 0",
+                  }}
+                  onClick={userLogin}
+                />
+                <p style={{ textAlign: "center" }}>OR</p>
+
+                <MaterialButton
+                  title="Request OTP"
+                  bgColor="#ffffff"
+                  textColor="#2874f0"
+                  style={{
+                    margin: "20px 0 20px 0",
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -210,10 +214,10 @@ const Header = (props) => {
             ]}
           />
           <div>
-            <a className="cart">
+            <NavLink to='/cart' className="cart">
               <IoIosCart />
               <span style={{ margin: '0 10px' }}>Cart</span>
-            </a>
+            </NavLink>
           </div>
         </div>
 
