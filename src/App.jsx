@@ -9,6 +9,7 @@ import ProductDetailsPage from './container/ProductDetailsPage/ProductDetailsPag
 import CartPage from './container/CartPage/CartPage';
 import { updateCart } from './redux/actions/cartAction';
 import CheckOutPage from './container/CheckOutPage/CheckOutPage';
+import OrderPage from './container/OrderPage/OrderPage';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="/" element={<HomePage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckOutPage />} />
+          <Route path="/account/orders" element={<OrderPage />} />
           <Route path="/:productSlug/:productId/p" element={<ProductDetailsPage />} />
           <Route path="/:slug" element={<ProductList />} />
         </Routes>
