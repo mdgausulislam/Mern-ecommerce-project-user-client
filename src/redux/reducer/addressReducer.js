@@ -3,10 +3,13 @@ import { userConstants } from "../actions/constant";
 const initState = {
     address: [],
     orders: [],
+    orderDetails: {},
     error: null,
     loading: false,
     orderFetching: false,
+    placedOrderId: null,
 };
+
 
 export default (state = initState, action) => {
     switch (action.type) {
@@ -61,6 +64,23 @@ export default (state = initState, action) => {
                 ...state,
                 error: action.payload.error,
                 orderFetching: false,
+            };
+        case userConstants.GET_USER_ORDER_DETAILS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case userConstants.GET_USER_ORDER_DETAILS_SUCCESS:
+            return {
+                ...state,
+                orderDetails: action.payload.order,
+                loading: false,
+            };
+        case userConstants.GET_USER_ORDER_DETAILS_FAILURE:
+            return {
+                ...state,
+                error: action.payload.error,
+                loading: false,
             };
     }
 

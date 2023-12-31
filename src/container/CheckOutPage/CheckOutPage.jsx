@@ -181,6 +181,17 @@ const CheckOutPage = () => {
     }, [user.address]);
 
 
+    if (confirmOrder) {
+        return (
+            <Main>
+                <Card>
+                    <div>SuccessFully Payment Orders</div>
+                </Card>
+            </Main>
+        )
+    }
+
+
     return (
         <Main>
             <div className="cartContainer" style={{ alignItems: "flex-start" }}>

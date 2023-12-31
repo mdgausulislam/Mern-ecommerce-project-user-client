@@ -15,21 +15,43 @@ import { login, signout } from '../../redux/actions/authActions';
 import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
-  const [signup, setSignup] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const auth = useSelector(state => state.auth)
+  const [signup, setSignup] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  const cart = useSelector((state) => state.cart);
+
+  const userSignup = () => {
+    const user = { firstName, lastName, email, password };
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      email === "" ||
+      password === ""
+    ) {
+      return;
+    }
+
+    dispatch(_signup(user));
+  };
+
   const userLogin = () => {
-    dispatch(login({ email, password }))
-  }
+    if (signup) {
+      userSignup();
+    } else {
+      dispatch(login({ email, password }));
+    }
+  };
 
   const logout = () => {
     dispatch(signout());
   };
-
 
   useEffect(() => {
     if (auth.authenticate) {
@@ -128,6 +150,27 @@ const Header = (props) => {
             <div className="rightspace">
 
               <div className="loginInputContainer">
+
+                {auth.error && (
+                  <div style={{ color: "red", fontSize: 12 }}>{auth.error}</div>
+                )}
+                {signup && (
+                  <MaterialInput
+                    type="text"
+                    label="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                )}
+                {signup && (
+                  <MaterialInput
+                    type="text"
+                    label="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                )}
+
                 <MaterialInput
                   type="text"
                   label="Enter Email/Enter Mobile Number"
