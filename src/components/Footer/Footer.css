@@ -1,0 +1,54 @@
+/* Footer.css */
+.footer {
+    margin-top: 20px;
+}
+
+.about-footer {
+    display: flex;
+    justify-content: space-between;
+    color: #f0f0f0;
+    background-color: #000;
+}
+
+.social-media-footer {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h3 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+p {
+    font-size: 12px;
+}
+
+.social-icons a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+/* Example: Using Font Awesome for social media icons */
+/* Replace with your actual social media icon library or images */
+.fa-facebook-f:before {
+    content: "\f09a";
+    /* Font Awesome Facebook icon */
+}
+
+.fa-twitter:before {
+    content: "\f099";
+    /* Font Awesome Twitter icon */
+}
+
+.fa-instagram:before {
+    content: "\f16d";
+    /* Font Awesome Instagram icon */
+}

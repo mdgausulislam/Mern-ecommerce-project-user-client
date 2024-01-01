@@ -1,18 +1,20 @@
 import { authConstant } from "../actions/constant";
+
 const initState = {
     token: null,
     user: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        picture: ''
+        firstName: "",
+        lastName: "",
+        email: "",
+        picture: "",
     },
     authenticate: false,
     authenticating: false,
     loading: false,
     error: null,
-    message: ''
+    message: "",
 };
+
 
 const authReducers = (state = initState, action) => {
     console.log(action);
@@ -46,6 +48,25 @@ const authReducers = (state = initState, action) => {
                 error: action.payload.error,
                 loading: false
             };
+        case authConstant.SIGNUP_REQUEST:
+            return {
+                ...state, // Return the current state for SIGNUP_REQUEST
+                loading: true,
+                error: null,
+            };
+        case authConstant.SIGNUP_SUCCESS:
+            return {
+                ...state, // Return the current state for SIGNUP_SUCCESS
+                loading: false,
+                error: null,
+            };
+        case authConstant.SIGNUP_FAILURE:
+            return {
+                ...state, // Return the current state for SIGNUP_FAILURE
+                loading: false,
+                error: action.payload.error,
+            };
+
         default:
             return state;
     }

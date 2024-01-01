@@ -15,12 +15,12 @@ const OrderDetailsPage = (props) => {
     useEffect(() => {
         console.log('orderId:', orderId);
         if (orderId) {
-          const payload = {
-            orderId,
-          };
-          dispatch(getOrder(payload));
+            const payload = {
+                orderId,
+            };
+            dispatch(getOrder(payload));
         }
-      }, [dispatch, orderId]);
+    }, [dispatch, orderId]);
 
     const formatDate = (date) => {
         if (date) {
@@ -85,7 +85,7 @@ const OrderDetailsPage = (props) => {
                 </Card>
 
                 {orderDetails.items.map((item, index) => (
-                    <Card
+                    <Card key={index}
                         style={{ display: "flex", padding: "20px 0", margin: "10px 0" }}
                     >
                         <div className="flexRow">
@@ -99,8 +99,8 @@ const OrderDetailsPage = (props) => {
                         </div>
                         <div style={{ padding: "25px 50px" }}>
                             <div className="orderTrack">
-                                {orderDetails.orderStatus.map((status) => (
-                                    <div
+                                {orderDetails.orderStatus.map((status, index) => (
+                                    <div key={index}
                                         className={`orderStatus ${status.isCompleted ? "active" : ""
                                             }`}
                                     >

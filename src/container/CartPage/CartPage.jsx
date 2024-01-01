@@ -4,18 +4,19 @@ import Card from '../../components/UI/Card/Card';
 import './CartPage.css'
 import { useDispatch, useSelector } from 'react-redux';
 import CartItems from './CartItems/CartItems';
-import { addToCart, getCartItems } from '../../redux/actions/cartAction';
+import { addToCart, getCartItems, removeCartItem } from '../../redux/actions/cartAction';
 import { MaterialButton } from '../../components/MaterialUI/MaterialUI';
-import { useNavigate } from 'react-router-dom';
 import PriceDetails from '../../components/PriceDetails/PriceDetails';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage = (props) => {
     const cart = useSelector((state) => state.cart);
     const auth = useSelector((state) => state.auth);
-    const navigate = useNavigate();
+    // const cartItems = cart.cartItems;
     const [cartItems, setCartItems] = useState(cart.cartItems);
     const dispatch = useDispatch();
-    // const cartItems = cart.cartItems;
+    const navigate = useNavigate();
+
     useEffect(() => {
         setCartItems(cart.cartItems);
     }, [cart.cartItems]);
@@ -25,7 +26,6 @@ const CartPage = (props) => {
             dispatch(getCartItems());
         }
     }, [auth.authenticate]);
-
 
     const onQuantityIncrement = (_id, qty) => {
         //console.log({_id, qty});
@@ -38,9 +38,9 @@ const CartPage = (props) => {
         dispatch(addToCart({ _id, name, price, img }, -1));
     };
 
-    // const onRemoveCartItem = (_id) => {
-    //     dispatch(removeCartItem({ productId: _id }));
-    // };
+    const onRemoveCartItem = (_id) => {
+        dispatch(removeCartItem({ productId: _id }));
+    };
 
     if (props.onlyCartItems) {
         return (
@@ -57,8 +57,6 @@ const CartPage = (props) => {
         );
     }
 
-
-
     return (
         <Main>
             <div className="cartContainer" style={{ alignItems: "flex-start" }}>
@@ -73,6 +71,7 @@ const CartPage = (props) => {
                             cartItem={cartItems[key]}
                             onQuantityInc={onQuantityIncrement}
                             onQuantityDec={onQuantityDecrement}
+                            onRemoveCartItem={onRemoveCartItem}
                         />
                     ))}
 

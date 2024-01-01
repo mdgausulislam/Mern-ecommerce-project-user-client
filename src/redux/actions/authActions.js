@@ -1,36 +1,28 @@
-import axiosIntance from "../../Axios/AxiosSecure";
+import axiosInstance from "../../Axios/AxiosSecure";
 import { authConstant, cartConstants } from "./constant";
-
 
 export const signup = (user) => {
     return async (dispatch) => {
         let res;
-        try {
-            dispatch({ type: authConstant.SIGNUP_REQUEST });
-            res = await axiosIntance.post(`/signup`, user);
-            if (res.status === 201) {
-                dispatch({ type: authConstant.SIGNUP_SUCCESS });
-                const { token, user } = res.data;
-                localStorage.setItem("token", token);
-                localStorage.setItem("user", JSON.stringify(user));
-                dispatch({
-                    type: authConstant.LOGIN_SUCCESS,
-                    payload: {
-                        token,
-                        user,
-                    },
-                });
-            } else {
-                const { error } = res.data;
-                dispatch({ type: authConstant.SIGNUP_FAILURE, payload: { error } });
-            }
-        } catch (error) {
-            const { data } = error.response;
+        dispatch({ type: authConstant.SIGNUP_REQUEST });
+        res = await axiosInstance.post(`/signup`, user);
+        if (res.status === 201) {
+            dispatch({ type: authConstant.SIGNUP_SUCCESS });
+            const { token, user } = res.data;
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
             dispatch({
-                type: authConstant.SIGNUP_FAILURE,
-                payload: { error: data.error },
+                type: authConstant.LOGIN_SUCCESS,
+                payload: {
+                    token,
+                    user,
+                },
             });
+        } else {
+            const { error } = res.data;
+            dispatch({ type: authConstant.SIGNUP_FAILURE, payload: { error } });
         }
+
     };
 };
 

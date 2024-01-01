@@ -2,12 +2,13 @@ import React from 'react';
 import Header from '../../components/Header/Header';
 import MenuHeader from '../../components/MenuHeader/MenuHeader';
 import Main from '../../Layout/Main';
+import Banner from '../../components/Banner/Banner';
 
 const HomePage = () => {
     return (
         <div>
             <Main>
-                <h1>Home page</h1>
+                <Banner />
             </Main>
         </div>
     );

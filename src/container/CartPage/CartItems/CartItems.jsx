@@ -17,6 +17,7 @@ const CartItems = (props) => {
         props.onQuantityDec(_id, qty - 1);
     };
 
+
     return (
         <div className="cartItemContainer">
             <div className="flexRow">
