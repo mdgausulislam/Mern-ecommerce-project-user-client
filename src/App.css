@@ -8,7 +8,10 @@ body {
 
 .flexRow {
     display: flex;
+    font-family: 400;
 }
+
+
 
 .sb {
     justify-content: space-between;
